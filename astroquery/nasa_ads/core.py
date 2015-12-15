@@ -109,3 +109,11 @@ class ADSClass(BaseQuery):
 
 ADS = ADSClass()
 
+def bibcode_to_bibtex(bibcode):
+    request_payload = {'qsearch': bibcode, 'data_type': 'BIBTEX'}
+    response = ADS._request(method='POST', url=ADS.QUERY_SIMPLE_URL,
+                         data=request_payload, timeout=ADS.TIMEOUT)
+    text = response.text
+    ind = text.index("@")
+    return text[ind:]
+
